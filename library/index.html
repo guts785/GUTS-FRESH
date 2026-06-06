@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 مكتبة طبونك</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<canvas id="matrixCanvas"></canvas>
+<div id="loadingScreen" class="loading-screen"><img src="assets/loading/loading.jpg" class="loading-img"><div class="loading-text">تسنا ازن</div></div>
+
+<div class="hero">
+  <h1 class="title">مكتبة طوبونك</h1>
+  <p class="subtitle">هو خدمة على مقتلبتشك ورش لخدمة لخدمة ويا</p>
+  <button id="randomBtn" class="btn">طنب</button>
+</div>
+
+<div class="glitch-divider"></div>
+
+<div class="category-bar" id="categoryBar">
+  <button class="cat-btn active" data-cat="all">🔥 الزب كامل</button>
+  <button class="cat-btn" data-cat="philosophy">🧠 طريقة</button>
+  <button class="cat-btn" data-cat="strategy">⚔️ استراتيجيات</button>
+  <button class="cat-btn" data-cat="power">👑 منطقة وتفرد</button>
+</div>
+
+<div class="search-box"><input id='searchInput' class='search-input' placeholder='9lb 3la liy7wik 🔍'></div>
+<div class="books" id="booksContainer">
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/Acres_Of_Diamonds.png" class="book-cover" alt="حقول ماسية" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">حقول ماسية</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Acres_Of_Diamonds.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Acres_Of_Diamonds.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/lao_tzu.png" class="book-cover" alt="لاو تزو" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">طاو تاو تشينج</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Lao_Tzu.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Lao_Tzu.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/Letters_from_a_Stoic.png" class="book-cover" alt="رسائل من رواقي" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">رسائل من رواقي</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Letters_from_a_Stoic.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Letters_from_a_Stoic.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/Mans_Search_for_Meaning.png" class="book-cover" alt="البحث عن المعنى" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">بحث الإنسان عن المعنى</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Mans_Search_for_Meaning.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Mans_Search_for_Meaning.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/The_Way_to_Wealth.png" class="book-cover" alt="طريق الثراء" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">طريق الثراء</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/The_Way_to_Wealth.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/The_Way_to_Wealth.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/The_way_of_a_pilgrim.png" class="book-cover" alt="طريق الحاج" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">طريق الحاج</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/Three_Books_of_Occult_Philosophy.png" class="book-cover" alt="فلسفة occult" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">ثلاث كتب في الفلسفة الغامضة</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Three_Books_of_Occult_Philosophy.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Three_Books_of_Occult_Philosophy.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/Who_was_James_Allen.png" class="book-cover" alt="من كان جيمس آلن" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">من كان جيمس آلن</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/Who_was_James_Allen.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/Who_was_James_Allen.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="philosophy">
+    <div class="cover-wrap">
+      <img src="assets/covers/The_Most_Forbidden_Knowledge_151.png" class="book-cover" alt="أشياء ممنوعة" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">أشياء ممنوعة</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/The_Most_Forbidden_Knowledge_151.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/The_Most_Forbidden_Knowledge_151.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+  <div class="book" data-cat="strategy">
+    <div class="cover-wrap">
+      <img src="assets/covers/the_prince.png" class="book-cover" alt="الأمير" loading="lazy">
+      <div class="cover-overlay"><span>📖 اقرأ</span></div>
+    </div>
+    <h3 class="book-title">الأمير</h3>
+    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
+    <button class="read-btn" data-file="assets/books_ar_built/the_prince.pdf">📖 قراءة</button>
+    <a href="assets/books_ar_built/the_prince.pdf" download class="download-btn">⬇️ تحميل</a>
+  </div>
+
+</div>
+
+<!-- PDF Modal -->
+<div id="pdfModal" class="pdf-modal" style="display:none;">
+  <div class="pdf-backdrop" id="pdfBackdrop"></div>
+  <div class="pdf-content">
+    <button id="closePdf" class="close-pdf">✕</button>
+    <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+  </div>
+</div>
+
+<footer>صنع بحب زب لبلدي ❤️‍🔥🤌</footer>
+
+<script src="assets/app.js"></script>
+
+<div class="float" id="playBtn">▶️</div>
+<div class="float" id="muteBtn">🔇</div>
+
+<audio id="chaabiPlayer"></audio>
+<div class="music-btn" id="musicBtn">🔇</div>
+<div class="music-next-btn" id="musicNextBtn">⏭️</div>
+
+<div id="playlistDropdown" class="playlist-dropdown" style="display:none;">
+  <div class="playlist-item active-track" data-track="0">🎵 LQLAWI</div>
+  <div class="playlist-item" data-track="1">🎵 Go Slowly</div>
+  <div class="playlist-item" data-track="2">🎵 In A Manner Of Speaking</div>
+  <div class="playlist-item" data-track="3">🎵 This Is Who I Am</div>
+</div>
+
+<div class="call-overlay" id="callOverlay">
+  <div class="call-sticker">
+    <img src="assets/sticker.jpg" class="sticker-img" alt="sticker">
+    <div class="calling-label">CALLING</div>
+  </div>
+  <div class="call-actions">
+    <button class="call-btn accept" id="callAccept">
+      <span class="phone-icon">📞</span><span class="phone-icon">📞</span>
+      <span class="status-dot green"></span>accept
+    </button>
+    <button class="call-btn decline" id="callDecline">
+      <span class="phone-icon">📞</span><span class="phone-icon">📞</span>
+      <span class="status-dot red"></span>decline
+    </button>
+  </div>
+</div>
+
+<div id="popupContainer" class="popup-container"></div>
+<div id="cursorSticker" class="cursor-sticker"><img src="assets/sticker.jpg" alt="cursor"></div>
+</body>
+</html>

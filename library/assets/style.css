@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #0a0a0c;
+  --surface: #14141a;
+  --accent: #00ff41;
+  --accent-dim: #0da82e;
+  --text: #d4d4d4;
+  --muted: #666;
+  --border: #1f1f24;
+  --glow: rgba(0,255,65,0.08);
+  --serif: 'Noto Naskh Arabic', 'Cairo', serif;
+  --sans:  'Cairo', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  direction: rtl;
+  line-height: 2;
+  font-size: 1.05rem;
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------- */
+/* HERO                                              */
+/* ------------------------------------------------- */
+.hero {
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-family: var(--sans);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.hero .subtitle {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.hero strong { color: var(--text); font-weight: 600; }
+.hero .subtitle { line-height: 2; }
+
+/* ------------------------------------------------- */
+/* HEADER                                            */
+/* ------------------------------------------------- */
+.site-header {
+  background: rgba(10,10,12,0.9);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  padding: 0 2rem;
+}
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  opacity: 0.65;
+  transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--accent); }
+
+/* ------------------------------------------------- */
+/* STATS / SEARCH                                    */
+/* ------------------------------------------------- */
+.stats-bar {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 1rem 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.stat-item { display: flex; flex-direction: column; }
+.stat-val { font-family: var(--sans); font-size: 2rem; font-weight: 700; color: var(--accent); }
+.stat-lbl { font-size: 0.8rem; color: var(--muted); font-family: var(--sans); }
+
+.search-box {
+  margin-bottom: 2rem;
+}
+.search-box input {
+  width: 100%;
+  max-width: 700px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.85rem 1.2rem;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  direction: rtl;
+}
+.search-box input:focus { outline: none; border-color: var(--accent-dim); }
+
+/* ------------------------------------------------- */
+/* GRID                                              */
+/* ------------------------------------------------- */
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.6rem;
+  padding-bottom: 4rem;
+}
+.item-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.6rem 1.4rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  height: 100%;
+}
+.item-card:hover {
+  border-color: var(--accent-dim);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 36px rgba(0,255,65,0.06);
+}
+.item-num {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+.item-title {
+  font-family: var(--sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text);
+}
+.item-card:hover .item-title { color: var(--accent); }
+.item-meta {
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  direction: ltr;
+}
+
+/* ------------------------------------------------- */
+/* ITEM PAGE                                         */
+/* ------------------------------------------------- */
+.container { max-width: 840px; margin: 0 auto; padding: 2rem; }
+
+.item-page { padding-top: 1rem; }
+.back-link {
+  display: inline-block;
+  font-family: var(--sans);
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent); }
+.item-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.item-header .num {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+.item-header h1 {
+  font-family: var(--sans);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1.4;
+}
+
+.arabic-text {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 2.2;
+  text-align: justify;
+  direction: rtl;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.arabic-text p {
+  margin-bottom: 1.4rem;
+  text-indent: 2.5em;
+}
+.arabic-text p:first-child {
+  text-indent: 0;
+}
+
+/* ------------------------------------------------- */
+/* FOOTER                                            */
+/* ------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--sans);
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 5rem;
+  line-height: 1.8;
+}
+.site-footer strong { color: var(--accent); }
+
+/* ------------------------------------------------- */
+/* LOADING SCREEN */
+/* ------------------------------------------------- */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.loading-screen .loading-img {
+  max-width: 200px;
+  margin-bottom: 1rem;
+}
+.loading-screen .loading-text {
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 1.2rem;
+}
+
+/* ------------------------------------------------- */
+/* BOOKS GRID – horizontal scroll (matrix theme)    */
+/* ------------------------------------------------- */
+.books {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1.4rem;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+}
+.book {
+  flex: 0 0 auto;
+  width: 180px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  scroll-snap-align: start;
+  transition: transform .2s, box-shadow .2s;
+}
+.book:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--glow);
+}
+.cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,255,65,0.12);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-weight: 600;
+  transition: opacity .2s;
+}
+.cover-wrap:hover .cover-overlay { opacity: 1; }
+.book-title {
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--text);
+  text-align: center;
+}
+.book-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  min-height: 2.6rem;
+}
+.read-btn, .download-btn {
+  width: 100%;
+  padding: 0.4rem 0;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.read-btn { background: var(--accent); color: var(--bg); }
+.download-btn { background: var(--surface); color: var(--accent); margin-top: 0.3rem; }
+
+/* ------------------------------------------------- */
+/* CATEGORY BAR – pill buttons                      */
+/* ------------------------------------------------- */
+.category-bar {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+.category-bar .cat-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.category-bar .cat-btn.active, .category-bar .cat-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ------------------------------------------------- */
+/* SEARCH INPUT – neon style                         */
+/* ------------------------------------------------- */
+.search-box input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  direction: rtl;
+}
+.search-box input::placeholder { color: var(--muted); }
+
+/* ------------------------------------------------- */
+/* FLOATING BUTTON – bottom left ("ابب")               */
+/* ------------------------------------------------- */
+.float {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  font-family: var(--sans);
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--glow);
+}
+
+#playBtn { left: 1.5rem; }
+#muteBtn { left: 6rem; }
+
+/* ------------------------------------------------- */
+/* MATRIX CANVAS – full screen overlay                */
+/* ------------------------------------------------- */
+#matrixCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
