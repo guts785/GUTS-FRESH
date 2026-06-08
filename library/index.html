@@ -2,189 +2,452 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📚 مكتبة طبونك</title>
-<link rel="stylesheet" href="assets/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>طبن لايبراري 🔥 الزب البلدي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --neon:#00ffae; --neon2:#ff2bd6; --neon3:#ffe600; --neon4:#00d9ff; --bg:#04050a;
+  --card:#0c0e16; --line:#1c2030;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Tajawal','Cairo',sans-serif;background:var(--bg);color:#fff;
+  overflow-x:hidden;position:relative;
+}
+body.shake{animation:bshake .4s}
+@keyframes bshake{0%,100%{transform:translate(0,0)}20%{transform:translate(-6px,4px)}40%{transform:translate(6px,-4px)}60%{transform:translate(-4px,-4px)}80%{transform:translate(4px,4px)}}
+@keyframes shake{0%,100%{transform:translate(0)}25%{transform:translate(-7px,5px) rotate(-.4deg)}50%{transform:translate(7px,-5px) rotate(.4deg)}75%{transform:translate(-5px,-3px)}}
+
+/* ===== animated backdrop ===== */
+.bgfx{position:fixed;inset:0;z-index:-4;background:
+  radial-gradient(circle at 20% 10%, rgba(255,43,214,.22), transparent 42%),
+  radial-gradient(circle at 80% 90%, rgba(0,255,174,.22), transparent 42%),
+  radial-gradient(circle at 60% 40%, rgba(0,217,255,.12), transparent 50%),
+  radial-gradient(circle at 50% 50%, rgba(255,230,0,.07), transparent 60%),
+  var(--bg);
+  animation:hue 16s linear infinite}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+.scan{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.07;
+  background:repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 3px);
+  animation:scan 8s linear infinite}
+@keyframes scan{to{transform:translateY(3px)}}
+.grid3d{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.18;perspective:400px;overflow:hidden}
+.grid3d::after{content:"";position:absolute;inset:-50% 0 -50% 0;
+  background-image:linear-gradient(var(--neon4) 1px,transparent 1px),linear-gradient(90deg,var(--neon4) 1px,transparent 1px);
+  background-size:44px 44px;transform:rotateX(68deg);animation:gridmove 4s linear infinite}
+@keyframes gridmove{to{background-position:0 44px}}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);z-index:-1;opacity:.4;animation:float 12s ease-in-out infinite}
+.blob.a{width:340px;height:340px;background:var(--neon2);top:-80px;left:-80px}
+.blob.b{width:300px;height:300px;background:var(--neon);bottom:-60px;right:-60px;animation-delay:-4s}
+.blob.c{width:260px;height:260px;background:var(--neon4);top:40%;left:50%;animation-delay:-8s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,40px) scale(1.15)}}
+
+/* ===== INTRO TAP-TO-ENTER ===== */
+#intro{position:fixed;inset:0;z-index:10000;background:#04050a;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:24px;cursor:pointer;text-align:center;transition:opacity .5s}
+#intro.gone{opacity:0;pointer-events:none}
+#intro .big{font-family:'Cairo';font-weight:900;font-size:clamp(44px,15vw,120px);line-height:.95;
+  background:linear-gradient(90deg,var(--neon),var(--neon2),var(--neon3),var(--neon4),var(--neon));
+  background-size:400%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 2.2s linear infinite;filter:drop-shadow(0 0 50px rgba(255,43,214,.6))}
+#intro .tap{font-weight:900;font-size:clamp(18px,5vw,26px);color:var(--neon3);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+#intro .emos{font-size:clamp(30px,9vw,60px);animation:wob 1.2s ease-in-out infinite}
+
+/* ===== LOADING ===== */
+#loader{position:fixed;inset:0;z-index:9999;background:#04050a;display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s}
+#loader.show{display:flex}
+#loader.gone{opacity:0;pointer-events:none}
+.loadlogo{font-family:'Cairo';font-weight:900;font-size:clamp(40px,12vw,90px);
+  background:linear-gradient(90deg,var(--neon),var(--neon2),var(--neon3),var(--neon));
+  background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 1.6s linear infinite;text-shadow:0 0 40px rgba(0,255,174,.4)}
+@keyframes shine{to{background-position:400%}}
+.loadbar{width:min(74vw,380px);height:12px;border-radius:30px;background:#0d0f1a;overflow:hidden;border:1px solid var(--line)}
+.loadbar i{display:block;height:100%;width:0;border-radius:30px;
+  background:linear-gradient(90deg,var(--neon),var(--neon2),var(--neon3));box-shadow:0 0 24px var(--neon)}
+.loadmsg{font-weight:900;font-size:19px;color:var(--neon3);letter-spacing:1px;min-height:26px}
+#loadsticker{width:min(46vw,200px);border-radius:18px;border:3px solid var(--neon2);
+  box-shadow:0 0 40px rgba(255,43,214,.6);animation:stickbob 1.4s ease-in-out infinite}
+@keyframes stickbob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.loadwait{font-family:'Cairo';font-weight:900;font-size:clamp(26px,8vw,44px);color:var(--neon3);
+  text-shadow:0 0 24px rgba(255,230,0,.5);animation:blink 1s steps(2) infinite;margin-top:-4px}
+
+/* ===== top bar ===== */
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;backdrop-filter:blur(16px);background:rgba(4,5,10,.55);border-bottom:1px solid var(--line)}
+.brand{font-family:'Cairo';font-weight:900;font-size:clamp(20px,5vw,30px);position:relative;
+  background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 12px rgba(255,43,214,.5))}
+.ctrls{display:flex;gap:10px;align-items:center}
+.cbtn{width:46px;height:46px;border-radius:50%;border:2px solid var(--neon);background:rgba(0,255,174,.08);
+  color:var(--neon);font-size:20px;display:grid;place-items:center;cursor:pointer;transition:.15s;font-weight:900}
+.cbtn:active{transform:scale(.82)}
+.cbtn.pink{border-color:var(--neon2);color:var(--neon2);background:rgba(255,43,214,.08)}
+.cbtn.spin{animation:spin 2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== HERO ===== */
+.hero{padding:30px 18px 6px;text-align:center}
+.glitch{font-family:'Cairo';font-weight:900;font-size:clamp(34px,10vw,76px);line-height:1.05;position:relative;
+  color:#fff;text-shadow:0 0 24px rgba(255,230,0,.3)}
+.glitch::before,.glitch::after{content:attr(data-t);position:absolute;inset:0;}
+.glitch::before{color:var(--neon2);animation:gl1 2.6s infinite linear alternate-reverse;clip-path:inset(0 0 60% 0)}
+.glitch::after{color:var(--neon4);animation:gl2 2s infinite linear alternate-reverse;clip-path:inset(55% 0 0 0)}
+@keyframes gl1{0%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,0)}100%{transform:translate(2px,1px)}}
+@keyframes gl2{0%{transform:translate(0)}25%{transform:translate(3px,-1px)}50%{transform:translate(-3px,2px)}75%{transform:translate(2px,-2px)}100%{transform:translate(-2px,0)}}
+.hero .sub{margin-top:10px;font-weight:900;font-size:clamp(15px,4.5vw,22px);color:#fff;opacity:.92}
+.hype{margin-top:12px;display:inline-flex;gap:8px;align-items:center;font-weight:900;font-size:15px;
+  padding:6px 16px;border-radius:30px;background:rgba(0,255,174,.1);border:1px solid var(--neon);color:var(--neon)}
+.hype b{color:var(--neon3);font-size:18px}
+
+.marq{margin:16px 0 6px;overflow:hidden;white-space:nowrap;border-block:2px solid var(--line);padding:9px 0;
+  background:linear-gradient(90deg,rgba(255,43,214,.07),rgba(0,255,174,.07))}
+.marq .row{display:inline-block;animation:slide 16s linear infinite}
+.marq span{display:inline-block;font-weight:900;font-size:21px;padding-inline:24px;color:var(--neon)}
+.marq span:nth-child(3n){color:var(--neon2)}
+.marq span:nth-child(3n+1){color:var(--neon3)}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+/* ===== chips ===== */
+.chips{display:flex;gap:10px;overflow-x:auto;padding:14px 18px 16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-weight:900;font-size:14px;padding:9px 17px;border-radius:30px;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);color:#fff;transition:.18s;white-space:nowrap}
+.chip:active{transform:scale(.9)}
+.chip.on{background:linear-gradient(90deg,var(--neon),var(--neon2));color:#000;border-color:transparent;box-shadow:0 6px 20px rgba(255,43,214,.4)}
+
+/* ===== shelf ===== */
+.shelfwrap{padding:8px 0 130px}
+.shelf-h{display:flex;align-items:center;gap:10px;padding:10px 18px 12px}
+.shelf-h b{font-family:'Cairo';font-size:23px;font-weight:900;color:var(--neon3)}
+.shelf-h .pill{font-size:12px;font-weight:900;padding:4px 12px;border-radius:30px;background:rgba(0,255,174,.12);color:var(--neon);border:1px solid var(--neon);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 16px var(--neon)}}
+.scroller{display:flex;gap:18px;overflow-x:auto;padding:6px 18px 22px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.scroller::-webkit-scrollbar{display:none}
+.card{flex:0 0 auto;width:min(62vw,228px);scroll-snap-align:center;background:var(--card);
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;transform-style:preserve-3d}
+.card:active{transform:scale(.95)}
+.card .cov{width:100%;aspect-ratio:3/4.4;object-fit:cover;display:block;background:#11131d}
+.card .glow{position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  box-shadow:inset 0 -60px 60px -20px rgba(0,0,0,.7)}
+.card .meta{padding:12px 12px 16px;position:relative}
+.card .meta h3{font-family:'Cairo';font-weight:900;font-size:16px;line-height:1.25;margin-bottom:6px}
+.card .meta p{font-size:12.5px;font-weight:700;color:var(--neon2);min-height:34px;line-height:1.45}
+.card .badge{position:absolute;top:10px;left:10px;background:var(--neon3);color:#000;font-weight:900;
+  font-size:11px;padding:3px 9px;border-radius:30px;transform:rotate(-7deg);box-shadow:0 4px 14px rgba(255,230,0,.5);z-index:2}
+.card .fire{position:absolute;top:10px;right:10px;font-size:22px;animation:wob 1.1s ease-in-out infinite;z-index:2}
+@keyframes wob{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+.card:hover{box-shadow:0 0 0 2px var(--neon2),0 16px 44px rgba(255,43,214,.35)}
+
+/* ===== reader ===== */
+#reader{position:fixed;inset:0;z-index:200;background:rgba(4,5,10,.97);display:none;flex-direction:column}
+#reader.open{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.rhead{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);gap:12px}
+.rhead b{font-family:'Cairo';font-weight:900;font-size:16px;color:var(--neon3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rclose{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon2);background:rgba(255,43,214,.1);color:var(--neon2);font-size:22px;font-weight:900;cursor:pointer}
+#reader iframe{flex:1;width:100%;border:0;background:#fff}
+.rdl{padding:10px 16px;text-align:center}
+.rdl a{display:inline-block;font-weight:900;text-decoration:none;color:#000;background:var(--neon);padding:11px 24px;border-radius:30px;box-shadow:0 6px 20px rgba(0,255,174,.4)}
+
+/* ===== flying curses + confetti ===== */
+.fly{position:fixed;font-family:'Cairo';font-weight:900;font-size:30px;pointer-events:none;z-index:120;
+  color:var(--neon2);text-shadow:0 0 20px rgba(255,43,214,.8);animation:fly 2.2s ease-out forwards}
+@keyframes fly{0%{opacity:0;transform:translateY(0) scale(.4) rotate(-12deg)}
+  15%{opacity:1}100%{opacity:0;transform:translateY(-200px) scale(1.6) rotate(14deg)}}
+.conf{position:fixed;width:10px;height:14px;z-index:115;pointer-events:none;animation:confdrop 1.6s ease-out forwards}
+@keyframes confdrop{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(220px) rotate(540deg)}}
+
+footer{text-align:center;padding:24px;font-weight:900;color:#555;font-size:13px}
+footer span{color:var(--neon2)}
+.corner{position:fixed;bottom:14px;z-index:60;font-family:'Cairo';font-weight:900;font-size:14px;
+  padding:8px 14px;border-radius:30px;backdrop-filter:blur(10px);cursor:pointer}
+.corner.l{left:14px;background:rgba(255,43,214,.15);color:var(--neon2);border:1px solid var(--neon2)}
+.corner.r{right:14px;background:rgba(0,255,174,.15);color:var(--neon);border:1px solid var(--neon);font-size:20px}
+.corner:active{transform:scale(.85)}
+
+/* ===== INCOMING CALL SCREEN ===== */
+#call{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;align-items:center;
+  justify-content:space-between;padding:54px 22px 60px;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,#06121c 0%,#0a0410 60%,#04050a 100%)}
+#call.open{display:flex;animation:callin .35s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes callin{from{opacity:0;transform:scale(1.12)}to{opacity:1;transform:scale(1)}}
+.callbg{position:absolute;inset:0;z-index:-1;opacity:.5;
+  background:radial-gradient(circle at 50% 30%,rgba(0,255,174,.25),transparent 55%),
+             radial-gradient(circle at 50% 80%,rgba(255,43,214,.22),transparent 55%);
+  animation:callpulse 2.4s ease-in-out infinite}
+@keyframes callpulse{50%{opacity:.85}}
+.callinfo{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:6px}
+.callfrom{font-family:'Cairo';font-weight:900;font-size:clamp(15px,4.5vw,20px);color:var(--neon3);
+  text-shadow:0 0 18px rgba(255,230,0,.5);letter-spacing:.5px}
+.callname{font-family:'Cairo';font-weight:900;font-size:clamp(24px,7vw,40px);color:#fff;
+  text-shadow:0 0 26px rgba(0,255,174,.55);line-height:1.1;padding:0 8px}
+.callstatus{font-weight:900;font-size:clamp(14px,4vw,18px);color:#c7d2da;opacity:.9;
+  animation:dots 1.4s steps(3) infinite}
+@keyframes dots{50%{opacity:.4}}
+.callpic{width:min(58vw,260px);aspect-ratio:1/1;object-fit:cover;border-radius:50%;margin-top:18px;
+  border:4px solid var(--neon);box-shadow:0 0 0 10px rgba(0,255,174,.08),0 0 60px rgba(0,255,174,.5);
+  animation:callring 1.8s ease-in-out infinite}
+@keyframes callring{0%,100%{box-shadow:0 0 0 10px rgba(0,255,174,.08),0 0 60px rgba(0,255,174,.5)}
+  50%{box-shadow:0 0 0 22px rgba(0,255,174,0),0 0 80px rgba(255,43,214,.6)}}
+.callactions{display:flex;justify-content:center;align-items:flex-start;gap:clamp(46px,18vw,90px);
+  width:100%;margin-bottom:6px}
+.callbtn-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.callbtn{width:clamp(70px,20vw,86px);height:clamp(70px,20vw,86px);border-radius:50%;border:0;
+  display:grid;place-items:center;cursor:pointer;transition:transform .15s;position:relative}
+.callbtn:active{transform:scale(.86)}
+.callbtn svg{width:46%;height:46%;fill:#fff}
+.callbtn.decline{background:#ff3b30;box-shadow:0 8px 28px rgba(255,59,48,.55);
+  animation:shakebtn 1.6s ease-in-out infinite}
+.callbtn.decline svg{transform:rotate(135deg)}
+.callbtn.accept{background:#34c759;box-shadow:0 8px 28px rgba(52,199,89,.55);
+  animation:wiggleacc 1s ease-in-out infinite}
+@keyframes shakebtn{0%,100%{transform:rotate(0)}30%{transform:rotate(-12deg)}60%{transform:rotate(12deg)}}
+@keyframes wiggleacc{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.callbtn-label{font-family:'Cairo';font-weight:900;font-size:clamp(13px,3.6vw,16px);color:#fff;
+  text-shadow:0 0 12px rgba(0,0,0,.6);max-width:34vw;line-height:1.25}
+</style>
 </head>
 <body>
-<canvas id="matrixCanvas"></canvas>
-<div id="loadingScreen" class="loading-screen"><img src="assets/loading/loading.jpg" class="loading-img"><div class="loading-text">تسنا ازن</div></div>
+<div class="bgfx"></div><div class="grid3d"></div><div class="scan"></div>
+<div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
 
-<div class="hero">
-  <h1 class="title">مكتبة طوبونك</h1>
-  <p class="subtitle">هو خدمة على مقتلبتشك ورش لخدمة لخدمة ويا</p>
-  <button id="randomBtn" class="btn">طنب</button>
+<!-- INTRO -->
+<div id="intro">
+  <div class="emos">🐐🔥💀</div>
+  <div class="big">طبن<br>لايبراري</div>
+  <div class="tap">👆 طبّق باش تدخل يا الزب البلدي</div>
 </div>
 
-<div class="glitch-divider"></div>
-
-<div class="category-bar" id="categoryBar">
-  <button class="cat-btn active" data-cat="all">🔥 الزب كامل</button>
-  <button class="cat-btn" data-cat="philosophy">🧠 طريقة</button>
-  <button class="cat-btn" data-cat="strategy">⚔️ استراتيجيات</button>
-  <button class="cat-btn" data-cat="power">👑 منطقة وتفرد</button>
+<!-- LOADER -->
+<div id="loader">
+  <img id="loadsticker" src="assets/loading_sticker.jpg" alt="">
+  <div class="loadwait">تسنا ازن</div>
+  <div class="loadlogo">طبن لايبراري</div>
+  <div class="loadbar"><i id="lbar"></i></div>
+  <div class="loadmsg" id="lmsg">كنشحن الزب البلدي...</div>
 </div>
 
-<div class="search-box"><input id='searchInput' class='search-input' placeholder='9lb 3la liy7wik 🔍'></div>
-<div class="books" id="booksContainer">
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/Acres_Of_Diamonds.png" class="book-cover" alt="حقول ماسية" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">حقول ماسية</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Acres_Of_Diamonds.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Acres_Of_Diamonds.pdf" download class="download-btn">⬇️ تحميل</a>
+<header>
+  <div class="brand">طبن 🔥 لايبراري</div>
+  <div class="ctrls">
+    <button class="cbtn" id="play" title="موسيقى">▶</button>
+    <button class="cbtn pink" id="mute" title="سكات">🔊</button>
   </div>
+</header>
 
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/lao_tzu.png" class="book-cover" alt="لاو تزو" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">طاو تاو تشينج</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Lao_Tzu.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Lao_Tzu.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
+<section class="hero">
+  <h1 class="glitch" data-t="سير ليعطي طبنمك صحة 📚">سير ليعطي طبنمك صحة 📚</h1>
+  <div class="sub">أحسن لايبراري مبرنرطة فالمغرب — كتب ديال الزب البلدي 🐐🔥</div>
+  <div class="hype">🔥 <b id="hypeN">0</b> طبن قراو ليوم</div>
+</section>
 
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/Letters_from_a_Stoic.png" class="book-cover" alt="رسائل من رواقي" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">رسائل من رواقي</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Letters_from_a_Stoic.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Letters_from_a_Stoic.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/Mans_Search_for_Meaning.png" class="book-cover" alt="البحث عن المعنى" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">بحث الإنسان عن المعنى</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Mans_Search_for_Meaning.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Mans_Search_for_Meaning.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/The_Way_to_Wealth.png" class="book-cover" alt="طريق الثراء" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">طريق الثراء</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/The_Way_to_Wealth.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/The_Way_to_Wealth.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/The_way_of_a_pilgrim.png" class="book-cover" alt="طريق الحاج" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">طريق الحاج</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/Three_Books_of_Occult_Philosophy.png" class="book-cover" alt="فلسفة occult" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">ثلاث كتب في الفلسفة الغامضة</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Three_Books_of_Occult_Philosophy.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Three_Books_of_Occult_Philosophy.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/Who_was_James_Allen.png" class="book-cover" alt="من كان جيمس آلن" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">من كان جيمس آلن</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/Who_was_James_Allen.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/Who_was_James_Allen.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="philosophy">
-    <div class="cover-wrap">
-      <img src="assets/covers/The_Most_Forbidden_Knowledge_151.png" class="book-cover" alt="أشياء ممنوعة" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">أشياء ممنوعة</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/The_Most_Forbidden_Knowledge_151.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/The_Most_Forbidden_Knowledge_151.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-  <div class="book" data-cat="strategy">
-    <div class="cover-wrap">
-      <img src="assets/covers/the_prince.png" class="book-cover" alt="الأمير" loading="lazy">
-      <div class="cover-overlay"><span>📖 اقرأ</span></div>
-    </div>
-    <h3 class="book-title">الأمير</h3>
-    <p class="book-desc">ترجمة عربية احترافية مطابقة لأسلوب الكتاب الأصلي.</p>
-    <button class="read-btn" data-file="assets/books_ar_built/the_prince.pdf">📖 قراءة</button>
-    <a href="assets/books_ar_built/the_prince.pdf" download class="download-btn">⬇️ تحميل</a>
-  </div>
-
-</div>
-
-<!-- PDF Modal -->
-<div id="pdfModal" class="pdf-modal" style="display:none;">
-  <div class="pdf-backdrop" id="pdfBackdrop"></div>
-  <div class="pdf-content">
-    <button id="closePdf" class="close-pdf">✕</button>
-    <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+<div class="marq">
+  <div class="row">
+    <span>طبن 🔥</span><span>سير ليعطي طبنمك صحة</span><span>الزب البلدي 🐐</span><span>تحوا 💀</span><span>قرا ولا سير تخرا</span>
+    <span>طبن 🔥</span><span>سير ليعطي طبنمك صحة</span><span>الزب البلدي 🐐</span><span>تحوا 💀</span><span>قرا ولا سير تخرا</span>
   </div>
 </div>
 
-<footer>صنع بحب زب لبلدي ❤️‍🔥🤌</footer>
+<div class="chips" id="chips"></div>
 
-<script src="assets/app.js"></script>
-
-<div class="float" id="playBtn">▶️</div>
-<div class="float" id="muteBtn">🔇</div>
-
-<audio id="chaabiPlayer"></audio>
-<div class="music-btn" id="musicBtn">🔇</div>
-<div class="music-next-btn" id="musicNextBtn">⏭️</div>
-
-<div id="playlistDropdown" class="playlist-dropdown" style="display:none;">
-  <div class="playlist-item active-track" data-track="0">🎵 LQLAWI</div>
-  <div class="playlist-item" data-track="1">🎵 Go Slowly</div>
-  <div class="playlist-item" data-track="2">🎵 In A Manner Of Speaking</div>
-  <div class="playlist-item" data-track="3">🎵 This Is Who I Am</div>
+<div class="shelfwrap">
+  <div class="shelf-h"><b>🔥 الناڭالين بزاف</b><span class="pill">VIRAL</span></div>
+  <div class="scroller" id="shelfHot"></div>
+  <div class="shelf-h"><b>🐐 لقمة ديال العقل</b><span class="pill">طبن</span></div>
+  <div class="scroller" id="shelfAll"></div>
 </div>
 
-<div class="call-overlay" id="callOverlay">
-  <div class="call-sticker">
-    <img src="assets/sticker.jpg" class="sticker-img" alt="sticker">
-    <div class="calling-label">CALLING</div>
+<div id="reader">
+  <div class="rhead"><b id="rtitle"></b><button class="rclose" id="rclose">✕</button></div>
+  <iframe id="rframe" src=""></iframe>
+  <div class="rdl"><a id="rdl" href="" download>⬇ نزّل الكتاب</a></div>
+</div>
+
+<!-- INCOMING CALL (shows before book opens) -->
+<div id="call">
+  <div class="callbg"></div>
+  <div class="callinfo">
+    <div class="callfrom" id="callfrom">الكتاب كيعيط ليك 📞</div>
+    <div class="callname" id="callname"></div>
+    <div class="callstatus">كيتصل بيك دابا...</div>
+    <img class="callpic" src="assets/call_meme.jpg" alt="">
   </div>
-  <div class="call-actions">
-    <button class="call-btn accept" id="callAccept">
-      <span class="phone-icon">📞</span><span class="phone-icon">📞</span>
-      <span class="status-dot green"></span>accept
-    </button>
-    <button class="call-btn decline" id="callDecline">
-      <span class="phone-icon">📞</span><span class="phone-icon">📞</span>
-      <span class="status-dot red"></span>decline
-    </button>
+  <div class="callactions">
+    <div class="callbtn-wrap">
+      <button class="callbtn decline" id="callDecline">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+      </button>
+      <span class="callbtn-label">عيّط ليه تحوا 💀</span>
+    </div>
+    <div class="callbtn-wrap">
+      <button class="callbtn accept" id="callAccept">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+      </button>
+      <span class="callbtn-label">جاوب اقرا 🐐</span>
+    </div>
   </div>
 </div>
 
-<div id="popupContainer" class="popup-container"></div>
-<div id="cursorSticker" class="cursor-sticker"><img src="assets/sticker.jpg" alt="cursor"></div>
+<footer>صنايعي: <span>الزب البلدي</span> 🐐 — برنرط 100% — قرا ولا سير تخرا 💀</footer>
+<div class="corner l" id="cl">?db hada tajine</div>
+<div class="corner r" id="cr">اب</div>
+
+<script>
+const BOOKS=[
+ {t:"الأمير",f:"the_prince.pdf",c:"the_prince.png",d:"ماكيافيلي كيقولك سير سيطر ولا تحوا. طبن.",hot:1,cat:"power"},
+ {t:"الفلسفة الخفية 3 كتب",f:"Three_Books_of_Occult_Philosophy.pdf",c:"Three_Books_of_Occult_Philosophy.png",d:"كتاب ديال الزب البلدي السري. ماتقراهش وانت خايف.",hot:1,cat:"occult"},
+ {t:"المعرفة الممنوعة 151",f:"The_Most_Forbidden_Knowledge_151.pdf",c:"The_Most_Forbidden_Knowledge_151.png",d:"151 حاجة محرمة. سير ليعطي طبنمك صحة وقرا.",hot:1,cat:"occult"},
+ {t:"البحث عن المعنى",f:"Mans_Search_for_Meaning.pdf",c:"Mans_Search_for_Meaning.png",d:"فرانكل كيعلمك علاش ماتحواش حتى فالضيق.",hot:1,cat:"mind"},
+ {t:"رسائل رواقي",f:"Letters_from_a_Stoic.pdf",c:"Letters_from_a_Stoic.png",d:"سينيكا كيراسلك: تحكم فراسك ولا سير تخرا.",hot:0,cat:"mind"},
+ {t:"الطريق للثروة",f:"The_Way_to_Wealth.pdf",c:"The_Way_to_Wealth.png",d:"فرانكلين كيقولك كيفاش تجمع الفلوس. طبن.",hot:1,cat:"money"},
+ {t:"أفدنة من الألماس",f:"Acres_Of_Diamonds.pdf",c:"Acres_Of_Diamonds.png",d:"الكنز تحت رجليك يا الزب البلدي.",hot:0,cat:"money"},
+ {t:"لاو تزو — التاو",f:"Lao_Tzu.pdf",c:"lao_tzu.png",d:"سير مع الواد ماتعاندش. تحوا بالساكت.",hot:0,cat:"mind"},
+ {t:"طريق الحاج",f:"The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf",c:"The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.png",d:"رحلة روحانية. باش طبنمك يرتاح.",hot:0,cat:"mind"},
+ {t:"شكون جيمس ألن",f:"Who_was_James_Allen.pdf",c:"Who_was_James_Allen.png",d:"فكرتك هي اللي كتبني. سير فكر مزيان.",hot:0,cat:"mind"},
+];
+const CATS=[{k:"all",n:"الكل 🔥"},{k:"power",n:"سلطة 🐐"},{k:"occult",n:"سحر 💀"},{k:"money",n:"فلوس 💸"},{k:"mind",n:"عقل 🧠"}];
+const CURSES=["طبن 🔥","تحوا 💀","الزب البلدي 🐐","سير ليعطي طبنمك صحة","قرا ولا سير تخرا","نااڭل 💯","?db hada tajine","اب 🐐"];
+const COLORS=["#00ffae","#ff2bd6","#ffe600","#00d9ff","#ff5e00"];
+const $=s=>document.querySelector(s);
+
+function card(b){
+  const el=document.createElement('div');el.className='card';
+  el.innerHTML=`${b.hot?'<div class="badge">نااڭل 🔥</div>':''}<div class="fire">🔥</div>
+    <img class="cov" src="assets/covers/${b.c}" alt="${b.t}" loading="lazy"
+      onerror="this.style.background='linear-gradient(135deg,#ff2bd6,#00ffae)'">
+    <div class="glow"></div>
+    <div class="meta"><h3>${b.t}</h3><p>${b.d}</p></div>`;
+  // 3D tilt
+  el.addEventListener('pointermove',e=>{
+    const r=el.getBoundingClientRect();
+    const rx=((e.clientY-r.top)/r.height-.5)*-14, ry=((e.clientX-r.left)/r.width-.5)*14;
+    el.style.transform=`perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.04)`;
+  });
+  el.addEventListener('pointerleave',()=>el.style.transform='');
+  el.onclick=(e)=>{showCall(b);blast(e);shake();};
+  return el;
+}
+function render(cat="all"){
+  const hot=$("#shelfHot"),all=$("#shelfAll");hot.innerHTML="";all.innerHTML="";
+  const list=cat==="all"?BOOKS:BOOKS.filter(b=>b.cat===cat);
+  BOOKS.filter(b=>b.hot).forEach(b=>hot.appendChild(card(b)));
+  list.forEach(b=>all.appendChild(card(b)));
+}
+function buildChips(){
+  const c=$("#chips");
+  CATS.forEach((cat,i)=>{
+    const b=document.createElement('button');b.className='chip'+(i===0?' on':'');b.textContent=cat.n;
+    b.onclick=e=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');render(cat.k);blast(e)};
+    c.appendChild(b);
+  });
+}
+function openReader(b){
+  $("#rtitle").textContent=b.t;$("#rframe").src="assets/books/"+b.f;
+  $("#rdl").href="assets/books/"+b.f;$("#rdl").setAttribute("download",b.t+".pdf");
+  $("#reader").classList.add("open");
+}
+// ===== incoming call gate: book "calls" you before it opens =====
+let pendingBook=null,callRing=null;
+function showCall(b){
+  pendingBook=b;
+  $("#callname").textContent=b.t;
+  $("#call").classList.add("open");
+  // ringtone via WebAudio (no asset needed)
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    callRing=setInterval(()=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type="sine";o.frequency.value=620;o.connect(g);g.connect(ctx.destination);
+      g.gain.setValueAtTime(.0001,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.18,ctx.currentTime+.05);
+      g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.4);
+      o.start();o.stop(ctx.currentTime+.42);
+    },700);
+  }catch(e){}
+}
+function endCall(){
+  $("#call").classList.remove("open");
+  if(callRing){clearInterval(callRing);callRing=null;}
+}
+$("#callAccept").onclick=e=>{
+  blast(e);shake();bumpHype(7);
+  endCall();
+  if(pendingBook)openReader(pendingBook);
+};
+$("#callDecline").onclick=e=>{
+  blast(e);shake();
+  endCall();
+  // taunt for declining
+  const f=document.createElement('div');f.className='fly';
+  f.textContent="تحوا 💀 خفت من الكتاب";
+  f.style.left=(innerWidth/2-80)+'px';f.style.top=(innerHeight/2)+'px';
+  f.style.color="#ff2bd6";f.style.fontSize="26px";
+  document.body.appendChild(f);setTimeout(()=>f.remove(),2200);
+  pendingBook=null;
+};
+$("#rclose").onclick=()=>{$("#reader").classList.remove("open");$("#rframe").src=""};
+
+function flyCurse(x,y){
+  const f=document.createElement('div');f.className='fly';
+  f.textContent=CURSES[Math.floor(Math.random()*CURSES.length)];
+  f.style.left=x+'px';f.style.top=y+'px';f.style.color=COLORS[Math.floor(Math.random()*COLORS.length)];
+  document.body.appendChild(f);setTimeout(()=>f.remove(),2200);
+}
+function confetti(x,y){
+  for(let i=0;i<14;i++){
+    const c=document.createElement('div');c.className='conf';
+    c.style.left=x+'px';c.style.top=y+'px';c.style.background=COLORS[i%COLORS.length];
+    c.style.transform=`translateX(${(Math.random()-.5)*160}px)`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),1600);
+  }
+}
+function blast(e){const x=(e&&e.clientX)||innerWidth/2,y=(e&&e.clientY)||innerHeight/2;flyCurse(x,y);confetti(x,y);}
+function shake(){document.body.classList.add('shake');setTimeout(()=>document.body.classList.remove('shake'),400);}
+
+let hype=Math.floor(Math.random()*900+1300);
+function bumpHype(n){hype+=n;$("#hypeN").textContent=hype.toLocaleString('ar-MA');}
+setInterval(()=>bumpHype(Math.floor(Math.random()*4+1)),2600);
+
+// music
+const tracks=["assets/music/track1.mp3","assets/music/track2.mp3","assets/music/track3.mp3"];
+let ti=0,audio=new Audio(tracks[0]);audio.volume=.55;
+audio.onended=()=>{ti=(ti+1)%tracks.length;audio.src=tracks[ti];audio.play().catch(()=>{})};
+let playing=false,muted=false;
+$("#play").onclick=()=>{playing?audio.pause():audio.play().catch(()=>{});playing=!playing;$("#play").textContent=playing?"⏸":"▶";$("#play").classList.toggle('spin',playing)};
+$("#mute").onclick=()=>{muted=!muted;audio.muted=muted;$("#mute").textContent=muted?"🔇":"🔊"};
+
+// corners spit curses
+$("#cl").onclick=e=>blast(e);$("#cr").onclick=e=>{blast(e);shake()};
+
+// loader
+const msgs=["كنشحن الزب البلدي...","سير ليعطي طبنمك صحة...","كنبرنرط العقل...","طبن جاهد...","نااڭل 100% 🔥"];
+function runLoader(){
+  $("#loader").classList.add("show");
+  let p=0,mi=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*24+10;if(p>100)p=100;
+    $("#lbar").style.width=p+"%";$("#lmsg").textContent=msgs[Math.min(mi++,msgs.length-1)];
+    if(p>=100){clearInterval(iv);setTimeout(()=>{$("#loader").classList.add("gone");startAmbient();bumpHype(0);},450)}
+  },360);
+}
+// intro -> loader
+$("#intro").onclick=function(){
+  this.classList.add("gone");
+  audio.play().then(()=>{playing=true;$("#play").textContent="⏸";$("#play").classList.add('spin')}).catch(()=>{});
+  setTimeout(runLoader,400);
+};
+function startAmbient(){
+  setInterval(()=>{if(!$("#reader").classList.contains("open"))flyCurse(Math.random()*innerWidth,innerHeight*.72)},3400);
+}
+buildChips();render();bumpHype(0);
+</script>
 </body>
 </html>
