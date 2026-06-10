@@ -128,7 +128,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .shelf-h b{font-family:'Cairo';font-size:23px;font-weight:900;color:var(--neon3)}
 .shelf-h .pill{font-size:12px;font-weight:900;padding:4px 12px;border-radius:30px;background:rgba(0,255,174,.12);color:var(--neon);border:1px solid var(--neon);animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 16px var(--neon)}}
-.scroller{display:flex;gap:18px;overflow-x:auto;padding:6px 18px 22px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.scroller{display:flex;gap:18px;overflow-x:auto;padding:6px 18px 22px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .scroller::-webkit-scrollbar{display:none}
 .card{flex:0 0 auto;width:min(62vw,228px);scroll-snap-align:center;background:var(--card);
   border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative;cursor:pointer;
@@ -192,7 +192,7 @@ footer span{color:var(--neon2)}
 .callstatus{font-weight:900;font-size:clamp(14px,4vw,18px);color:#c7d2da;opacity:.9;
   animation:dots 1.4s steps(3) infinite}
 @keyframes dots{50%{opacity:.4}}
-.callpic{width:min(58vw,260px);aspect-ratio:1/1;object-fit:cover;border-radius:50%;margin-top:18px;
+.callpic{width:min(50vw,220px);height:auto;object-fit:cover;border-radius:18px;margin-top:12px;
   border:4px solid var(--neon);box-shadow:0 0 0 10px rgba(0,255,174,.08),0 0 60px rgba(0,255,174,.5);
   animation:callring 1.8s ease-in-out infinite}
 @keyframes callring{0%,100%{box-shadow:0 0 0 10px rgba(0,255,174,.08),0 0 60px rgba(0,255,174,.5)}
@@ -223,7 +223,7 @@ footer span{color:var(--neon2)}
 <div id="intro">
   <div class="emos">🐐🔥💀</div>
   <div class="big">طبن<br>لايبراري</div>
-  <div class="tap">👆 طبّق باش تدخل يا الزب البلدي</div>
+  <div class="tap">👆 كليكي عل السيت ولا غنكليكي فكرك</div>
 </div>
 
 <!-- LOADER -->
@@ -239,27 +239,40 @@ footer span{color:var(--neon2)}
   <div class="brand">طبن 🔥 لايبراري</div>
   <div class="ctrls">
     <button class="cbtn" id="play" title="موسيقى">▶</button>
-    <button class="cbtn pink" id="mute" title="سكات">🔊</button>
+    <button class="cbtn pink" id="playlistBtn" title="Playlist">🎵</button>
   </div>
 </header>
 
+<div id="playlistPanel" style="
+position:fixed;
+top:70px;
+left:18px;
+background:#0c0e16;
+border:1px solid #ff2bd6;
+border-radius:14px;
+padding:14px;
+display:none;
+z-index:200;
+width:220px;
+"></div>
+
 <section class="hero">
   <h1 class="glitch" data-t="سير ليعطي طبنمك صحة 📚">سير ليعطي طبنمك صحة 📚</h1>
-  <div class="sub">أحسن لايبراري مبرنرطة فالمغرب — كتب ديال الزب البلدي 🐐🔥</div>
+  <div class="sub">أحسن لايبراري مقيمة فلمغرب — كتب ديال الزب البلدي 🐐🔥</div>
   <div class="hype">🔥 <b id="hypeN">0</b> طبن قراو ليوم</div>
 </section>
 
 <div class="marq">
   <div class="row">
-    <span>طبن 🔥</span><span>سير ليعطي طبنمك صحة</span><span>الزب البلدي 🐐</span><span>تحوا 💀</span><span>قرا ولا سير تخرا</span>
-    <span>طبن 🔥</span><span>سير ليعطي طبنمك صحة</span><span>الزب البلدي 🐐</span><span>تحوا 💀</span><span>قرا ولا سير تخرا</span>
+    <span>طبن 🔥</span><span>وا لخدمة لخدمة وش مغتقلبش عل خدمة</span><span>الزب البلدي 🐐</span><span>لواليد لواليد قالي أعيد أعيد</span><span>قرا ولا ستحو</span>
+    <span>طبن 🔥</span><span>وا لخدمة لخدمة وش مغتقلبش عل خدمة</span><span>الزب البلدي 🐐</span><span>لواليد لواليد قالي أعيد أعيد</span><span>قرا ولا ستحو</span>
   </div>
 </div>
 
 <div class="chips" id="chips"></div>
 
 <div class="shelfwrap">
-  <div class="shelf-h"><b>🔥 الناڭالين بزاف</b><span class="pill">VIRAL</span></div>
+  <div class="shelf-h"><b>🔥 الهوتقام بزاف</b><span class="pill">VIRAL</span></div>
   <div class="scroller" id="shelfHot"></div>
   <div class="shelf-h"><b>🐐 لقمة ديال العقل</b><span class="pill">طبن</span></div>
   <div class="scroller" id="shelfAll"></div>
@@ -285,20 +298,20 @@ footer span{color:var(--neon2)}
       <button class="callbtn decline" id="callDecline">
         <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
       </button>
-      <span class="callbtn-label">عيّط ليه تحوا 💀</span>
+      <span class="callbtn-label">قود</span>
     </div>
     <div class="callbtn-wrap">
       <button class="callbtn accept" id="callAccept">
         <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
       </button>
-      <span class="callbtn-label">جاوب اقرا 🐐</span>
+      <span class="callbtn-label">جاوب</span>
     </div>
   </div>
 </div>
 
-<footer>صنايعي: <span>الزب البلدي</span> 🐐 — برنرط 100% — قرا ولا سير تخرا 💀</footer>
+<footer>صنايعي: <span>الزب البلدي</span> 🐐 — بزولتك 100% — قرا ولا ستحو</footer>
 <div class="corner l" id="cl">?db hada tajine</div>
-<div class="corner r" id="cr">اب</div>
+<div class="corner r" id="cr">ابب</div>
 
 <script>
 const BOOKS=[
@@ -306,21 +319,21 @@ const BOOKS=[
  {t:"الفلسفة الخفية 3 كتب",f:"Three_Books_of_Occult_Philosophy.pdf",c:"Three_Books_of_Occult_Philosophy.png",d:"كتاب ديال الزب البلدي السري. ماتقراهش وانت خايف.",hot:1,cat:"occult"},
  {t:"المعرفة الممنوعة 151",f:"The_Most_Forbidden_Knowledge_151.pdf",c:"The_Most_Forbidden_Knowledge_151.png",d:"151 حاجة محرمة. سير ليعطي طبنمك صحة وقرا.",hot:1,cat:"occult"},
  {t:"البحث عن المعنى",f:"Mans_Search_for_Meaning.pdf",c:"Mans_Search_for_Meaning.png",d:"فرانكل كيعلمك علاش ماتحواش حتى فالضيق.",hot:1,cat:"mind"},
- {t:"رسائل رواقي",f:"Letters_from_a_Stoic.pdf",c:"Letters_from_a_Stoic.png",d:"سينيكا كيراسلك: تحكم فراسك ولا سير تخرا.",hot:0,cat:"mind"},
+ {t:"رسائل رواقي",f:"Letters_from_a_Stoic.pdf",c:"Letters_from_a_Stoic.png",d:"سينيكا كيراسلك: تحكم فراسك ولا سير تكفت.",hot:0,cat:"mind"},
  {t:"الطريق للثروة",f:"The_Way_to_Wealth.pdf",c:"The_Way_to_Wealth.png",d:"فرانكلين كيقولك كيفاش تجمع الفلوس. طبن.",hot:1,cat:"money"},
  {t:"أفدنة من الألماس",f:"Acres_Of_Diamonds.pdf",c:"Acres_Of_Diamonds.png",d:"الكنز تحت رجليك يا الزب البلدي.",hot:0,cat:"money"},
  {t:"لاو تزو — التاو",f:"Lao_Tzu.pdf",c:"lao_tzu.png",d:"سير مع الواد ماتعاندش. تحوا بالساكت.",hot:0,cat:"mind"},
  {t:"طريق الحاج",f:"The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.pdf",c:"The_way_of_a_pilgrim__and_A_pilgrim_continues_his_way.png",d:"رحلة روحانية. باش طبنمك يرتاح.",hot:0,cat:"mind"},
  {t:"شكون جيمس ألن",f:"Who_was_James_Allen.pdf",c:"Who_was_James_Allen.png",d:"فكرتك هي اللي كتبني. سير فكر مزيان.",hot:0,cat:"mind"},
 ];
-const CATS=[{k:"all",n:"الكل 🔥"},{k:"power",n:"سلطة 🐐"},{k:"occult",n:"سحر 💀"},{k:"money",n:"فلوس 💸"},{k:"mind",n:"عقل 🧠"}];
-const CURSES=["طبن 🔥","تحوا 💀","الزب البلدي 🐐","سير ليعطي طبنمك صحة","قرا ولا سير تخرا","نااڭل 💯","?db hada tajine","اب 🐐"];
+const CATS=[{k:"all",n:"الزب كامل"},{k:"power",n:"سلطة"},{k:"occult",n:"سحر"},{k:"money",n:"فلوس"},{k:"mind",n:"عقل"}];
+const CURSES=["طبن 🔥","تحوا","الزب البلدي 🐐","سير ليعطي طبنمك صحة","قرا ولا ستحو","هوتقام 💯","?db hada tajine","ابب 🐐"];
 const COLORS=["#00ffae","#ff2bd6","#ffe600","#00d9ff","#ff5e00"];
 const $=s=>document.querySelector(s);
 
 function card(b){
   const el=document.createElement('div');el.className='card';
-  el.innerHTML=`${b.hot?'<div class="badge">نااڭل 🔥</div>':''}<div class="fire">🔥</div>
+  el.innerHTML=`${b.hot?'<div class="badge">هوتقام 🔥</div>':''}<div class="fire">🔥</div>
     <img class="cov" src="assets/covers/${b.c}" alt="${b.t}" loading="lazy"
       onerror="this.style.background='linear-gradient(135deg,#ff2bd6,#00ffae)'">
     <div class="glow"></div>
@@ -417,18 +430,42 @@ function bumpHype(n){hype+=n;$("#hypeN").textContent=hype.toLocaleString('ar-MA'
 setInterval(()=>bumpHype(Math.floor(Math.random()*4+1)),2600);
 
 // music
-const tracks=["assets/music/track1.mp3","assets/music/track2.mp3","assets/music/track3.mp3"];
-let ti=0,audio=new Audio(tracks[0]);audio.volume=.55;
-audio.onended=()=>{ti=(ti+1)%tracks.length;audio.src=tracks[ti];audio.play().catch(()=>{})};
-let playing=false,muted=false;
+const tracks = [
+  {src:"assets/music/intro.mp3", title:"lqlawi healing"},
+  {src:"assets/music/track1.mp3", title:"in a manner of speaking"},
+  {src:"assets/music/track2.mp3", title:"go slowly"},
+  {src:"assets/music/track3.mp3", title:"nsit smiyt hd lmzika hh"}
+];
+let ti=0,audio=new Audio(tracks[0].src);audio.volume=.55;
+audio.onended=()=>{ti=(ti+1)%tracks.length;audio.src=tracks[ti].src;audio.play().catch(()=>{})};
+let playing=false;
 $("#play").onclick=()=>{playing?audio.pause():audio.play().catch(()=>{});playing=!playing;$("#play").textContent=playing?"⏸":"▶";$("#play").classList.toggle('spin',playing)};
-$("#mute").onclick=()=>{muted=!muted;audio.muted=muted;$("#mute").textContent=muted?"🔇":"🔊"};
+
+const pl = $("#playlistPanel");
+$("#playlistBtn").onclick=()=>{pl.style.display = pl.style.display==="block" ? "none":"block";};
+
+function buildPlaylist(){
+  pl.innerHTML="";
+  tracks.forEach((t,i)=>{
+    const btn=document.createElement("div");
+    btn.textContent=t.title;
+    btn.style.cssText="cursor:pointer;padding:8px;font-weight:900;border-bottom:1px solid #222;color:"+(i===ti?"#ff2bd6":"#fff");
+    btn.onclick=()=>{
+      ti=i; audio.src=t.src; audio.load();
+      if(playing) audio.play().catch(()=>{});
+      buildPlaylist();
+      pl.style.display="none";
+    };
+    pl.appendChild(btn);
+  });
+}
+buildPlaylist();
 
 // corners spit curses
 $("#cl").onclick=e=>blast(e);$("#cr").onclick=e=>{blast(e);shake()};
 
 // loader
-const msgs=["كنشحن الزب البلدي...","سير ليعطي طبنمك صحة...","كنبرنرط العقل...","طبن جاهد...","نااڭل 100% 🔥"];
+const msgs=["كنشحن الزب البلدي...","سير ليعطي طبنمك صحة...","كنبرنرط العقل...","طبن جاهد...","هوتقام 100% 🔥"];
 function runLoader(){
   $("#loader").classList.add("show");
   let p=0,mi=0;
@@ -441,8 +478,8 @@ function runLoader(){
 // intro -> loader
 $("#intro").onclick=function(){
   this.classList.add("gone");
+  runLoader();
   audio.play().then(()=>{playing=true;$("#play").textContent="⏸";$("#play").classList.add('spin')}).catch(()=>{});
-  setTimeout(runLoader,400);
 };
 function startAmbient(){
   setInterval(()=>{if(!$("#reader").classList.contains("open"))flyCurse(Math.random()*innerWidth,innerHeight*.72)},3400);
